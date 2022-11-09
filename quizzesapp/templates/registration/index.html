@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+
+{% block content %}
+
+  {% if user.is_authenticated %}
+    {% for q in quiz %}
+      <h1>{{q.id}}</h1>
+      <h1>{{q.question}}</h1>
+      <h1>{{q.section}}</h1>
+      <h1>{{q.solution}}</h1>
+    {% endfor %}
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+
+<form action="" method="POST">
+    {% csrf_token %}
+    Answer: <input type="text" name="answer"/><br/>
+    <input type="submit" value="Post"/>
+</form>
+
+{% endblock %}
+
+
+</html>
+
