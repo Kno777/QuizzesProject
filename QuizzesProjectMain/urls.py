@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -22,6 +22,10 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('quizzesapp.urls')),
+    re_path(r'^quizzes-auth/', include('rest_framework.urls')), #login logout
+    re_path(r'^quizzes/rest-auth/', include('rest_auth.urls')), # password/reset/ , password/reset/confirm/, login , logout, user/, password/change/, registration/
+    path('quizzes/rest-auth/registration/',include('rest_auth.registration.urls')), # registration
+    path('accounts/', include('allauth.urls')),
 ]
 
 if settings.DEBUG:
