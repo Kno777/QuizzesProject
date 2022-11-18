@@ -1,0 +1,19 @@
+{% extends "quizzesapp/base.html" %}
+
+{% block title %}My Quiz{% endblock %}
+
+{% block content %}
+  <h1>My Quiz</h1>
+  {%for post in posts%}
+    <h2>
+      <a href="{{post.get_absolute_url}}">        
+        {{ post.question }}
+      </a>
+    </h2>
+    <p class="section">
+        Section:
+        {{post.section}}
+    </p>
+    {%endfor%}
+  {% include "pagination.html" with page=posts %}
+{% endblock %}
