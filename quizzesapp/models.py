@@ -1,6 +1,7 @@
 from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class QuizzesPython(models.Model):
@@ -68,10 +69,17 @@ class QuizzesPython(models.Model):
             img.thumbnail(output_size)
             img.save(self.code_image.path)
 
+    def get_absolute_url(self):
+           return reverse('quizzesapp:quiz_detail', args=[self.id])
+
 
 class Quizzes_Users_Answers(models.Model):
     """Users answer for Quizzes questions!"""
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     quiz_id = models.ForeignKey(QuizzesPython, on_delete=models.CASCADE)
     answer = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return f"{self.user_id} -> {self.quiz_id} -> {self.answer}"
+
 
