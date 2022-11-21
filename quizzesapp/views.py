@@ -61,7 +61,3 @@ def quiz_share(request, quiz_id):
   else:
         form = EmailPostForm()
   return render(request, 'quizzesapp/quizzes/share.html', {'post': post, 'form': form, 'sent': sent})
-
-
-def foo():
-    return ""
