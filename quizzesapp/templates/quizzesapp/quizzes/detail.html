@@ -1,0 +1,15 @@
+{% extends "quizzesapp/base.html" %}
+{% block title %}{{ post.question }}{% endblock %}
+{% block content %}
+{% load static %}
+  <h1>{{ post.question }}</h1>
+  <h1>{{ post.section }}</h1>
+  {%if post.code_image %}
+  <img width="500px" src="{{post.code_image.url}}" alt="">
+  {%endif%}
+  <p>
+    <a href="{% url "quizzesapp:quiz_share" post.id %}">
+      Share this post
+    </a>
+  </p>
+{% endblock %}
