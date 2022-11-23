@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.core.mail import send_mail
-from .forms import EmailPostForm
+from .forms import EmailPostForm, SearchForm
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.postgres.search import SearchVector
 
 def quiz_list(request):
   post_list = QuizzesPython.objects.all()
@@ -61,3 +61,19 @@ def quiz_share(request, quiz_id):
   else:
         form = EmailPostForm()
   return render(request, 'quizzesapp/quizzes/share.html', {'post': post, 'form': form, 'sent': sent})
+
+
+def post_search(request):
+  form = SearchForm()
+  query = None
+  results = []
+  if 'query' in request.GET:
+    form = SearchForm(request.GET)
+    if form.is_valid():
+      query = form.cleaned_data['query']
+      results = QuizzesPython.objects.filter(question__icontains=query)
+  return render(request,
+                     'quizzesapp/quizzes/search.html',
+                     {'form': form,
+                      'query': query,
+                      'results': results})
