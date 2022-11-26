@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,19 +42,6 @@ INSTALLED_APPS = [
 
     # My Own Apps
     'quizzesapp.apps.QuizzesappConfig',
-
-    # DRF
-    'rest_framework',
-
-    'rest_auth',
-
-    'rest_framework.authtoken',
-
-    'allauth', # new
-    'allauth.account', # new
-    'allauth.socialaccount', # new
-
-    'rest_auth.registration', 
 
     'django_filters',
 ]
@@ -96,7 +84,7 @@ WSGI_APPLICATION = 'QuizzesProjectMain.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'quizzes',
+        'NAME': 'QuizzesDB',
         'USER': 'kno',
         'PASSWORD': 'Kno286687',
     }
@@ -166,6 +154,10 @@ AUTHENTICATION_BACKENDS = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'knyazharutyunyan03@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxxxxxxxxxxx'
+EMAIL_HOST_PASSWORD = 'smnszkfqfvuhotby'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
