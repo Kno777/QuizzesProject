@@ -22,10 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('quizzesapp.urls', namespace='quizzesapp')),
-    #re_path(r'^quizzes-auth/', include('rest_framework.urls')), #login logout
-    #re_path(r'^quizzes/rest-auth/', include('rest_auth.urls')), # password/reset/ , password/reset/confirm/, login , logout, user/, password/change/, registration/
-    #path('quizzes/rest-auth/registration/',include('rest_auth.registration.urls')), # registration
-    #path('accounts/', include('allauth.urls')),
+    path('account/', include('account.urls')),
 ]
 
 if settings.DEBUG:
