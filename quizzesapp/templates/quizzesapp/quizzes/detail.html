@@ -7,9 +7,30 @@
   {%if post.code_image %}
   <img width="500px" src="{{post.code_image.url}}" alt="">
   {%endif%}
+  <form method="post" enctype="multipart/form-data">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="answer">
+  </form>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  {%if check_answer %}
+    <h1>{{post.solution}}</h1>
+  {%endif%}
+  <br>
+  <br>
   <p>
     <a href="{% url "quizzesapp:quiz_share" post.id %}">
       Share this post
     </a>
   </p>
+  <br>
+  <br>
+  <ul>
+    <li><a href="{% url "quizzesapp:quiz_detail" another_quiz %}">Another Quiz</a></li>
+  </ul>
 {% endblock %}

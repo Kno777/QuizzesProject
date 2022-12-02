@@ -4,10 +4,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.views.generic import ListView
 from django.core.mail import send_mail
-from .forms import EmailPostForm, SearchForm
+from .forms import EmailPostForm, SearchForm, UserAnswerPythonForm
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
+from django.contrib import messages
+
+from random import randint
+
+
+def get_quiz_count():
+  count = QuizzesPython.objects.count()
+  return count
+
+def get_next_quiz():
+  number_of_quiz = randint(1,get_quiz_count())
+  return number_of_quiz
 
 def quiz_list(request):
   post_list = QuizzesPython.objects.all()
@@ -25,21 +37,35 @@ def quiz_list(request):
   
   return render(request,'quizzesapp/quizzes/list.html', {'posts': posts})
 
-# class PostListView(ListView):
-#   """
-#   Alternative post list view
-#   """
-#   queryset = QuizzesPython.objects.all()
-#   context_object_name = 'posts'
-#   paginate_by = 3
-#   template_name = 'quizzesapp/quizzes/list.html'
 
 def quiz_detail(request, id):
   post = get_object_or_404(QuizzesPython, id=id)
-  ans = Quizzes_Users_Answers.objects.all()
-  
-  return render(request,'quizzesapp/quizzes/detail.html',{'post': post})
+  ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
+  check_answer = False
+  another_quiz = get_next_quiz()
 
+  if request.method == 'POST':
+    form = UserAnswerPythonForm(request.POST)
+    if form.is_valid():
+      ans.answer = form.cleaned_data['answer']
+      if post.admin_correct_answer == ans.answer:
+        messages.success(request, "Your answer is right")
+        ans.save()
+        # check user answer correct or no in HTML
+        check_answer=True
+        # added user answer in DB
+        Quizzes_Users_Answers.objects.create(quiz_id_id=id, user_id_id=request.user.id, answer=ans.answer)
+      else:
+        messages.error(request, "Your answer is wrong")
+  else:
+    form = UserAnswerPythonForm()
+  return render(request,'quizzesapp/quizzes/detail.html',
+                        {'post': post, 
+                        'form':form, 
+                        'ans':ans, 
+                        'check_answer':check_answer,
+                        'another_quiz':another_quiz
+                      })
 
 def quiz_share(request, quiz_id):
   # Retrieve post by id

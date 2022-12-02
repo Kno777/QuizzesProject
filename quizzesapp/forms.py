@@ -8,3 +8,6 @@ class EmailPostForm(forms.Form):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+class UserAnswerPythonForm(forms.Form):
+    answer = forms.CharField()
