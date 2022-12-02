@@ -20,6 +20,7 @@ def get_quiz_count():
 def get_next_quiz():
   number_of_quiz = randint(1,get_quiz_count())
   return number_of_quiz
+  
 
 def quiz_list(request):
   post_list = QuizzesPython.objects.all()
