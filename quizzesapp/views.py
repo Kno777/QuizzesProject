@@ -14,13 +14,24 @@ from random import randint
 
 
 def get_quiz_count():
-  count = QuizzesPython.objects.count()
+  count = 0
+  for quiz_id in QuizzesPython.objects.all():
+    count = quiz_id.id
   return count
 
 def get_next_quiz():
   number_of_quiz = randint(1,get_quiz_count())
-  return number_of_quiz
-  
+  ids_exist_list = []
+  for exist in QuizzesPython.objects.all():
+    ids_exist_list.append(exist.id)
+  try:
+    if number_of_quiz in ids_exist_list:
+      print("Number ----->", number_of_quiz)
+      print("idx list ---->", ids_exist_list)
+      return number_of_quiz
+  except QuizzesPython.DoesNotExist as e:
+    return f"Error {e}"
+
 
 def quiz_list(request):
   post_list = QuizzesPython.objects.all()
@@ -41,9 +52,11 @@ def quiz_list(request):
 
 def quiz_detail(request, id):
   post = get_object_or_404(QuizzesPython, id=id)
-  ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
+  #ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
+  ans = Quizzes_Users_Answers.objects.all()
   check_answer = False
   another_quiz = get_next_quiz()
+  print("Another ----->",another_quiz)
 
   if request.method == 'POST':
     form = UserAnswerPythonForm(request.POST)
@@ -51,7 +64,7 @@ def quiz_detail(request, id):
       ans.answer = form.cleaned_data['answer']
       if post.admin_correct_answer == ans.answer:
         messages.success(request, "Your answer is right")
-        ans.save()
+        #ans.save()
         # check user answer correct or no in HTML
         check_answer=True
         # added user answer in DB
