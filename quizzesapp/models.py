@@ -70,7 +70,7 @@ class QuizzesPython(models.Model):
             img.save(self.code_image.path)
 
     def get_absolute_url(self):
-           return reverse('quizzesapp:quiz_detail', args=[self.id])
+           return reverse('quizzesapp:quiz_detail', kwargs={'id':self.id})
 
 
 class Quizzes_Users_Answers(models.Model):
