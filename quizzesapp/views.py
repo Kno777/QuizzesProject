@@ -11,7 +11,13 @@ from django.contrib.postgres.search import SearchVector
 from django.contrib import messages
 
 from random import randint
+from django.contrib.auth.decorators import login_required
 
+############################################################
+############################################################
+############################################################
+
+# es 3 functioneri vra petqa mtacem te vonc darcnem async vor jisht ashxati
 
 def get_quiz_count():
   count = 0
@@ -33,24 +39,7 @@ def get_next_quiz():
     return f"Error {e}"
 
 
-def quiz_list(request):
-  post_list = QuizzesPython.objects.all()
-
-  paginator = Paginator(post_list, 3) 
-  page_number = request.GET.get('page', 1) 
-  try:
-    posts = paginator.page(page_number)
-  except PageNotAnInteger:
-    # If page_number is not an integer deliver the first page 
-    posts = paginator.page(1)
-  except EmptyPage:
-    # If page_number is out of range deliver last page of results 
-    posts = paginator.page(paginator.num_pages)
-  
-  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts})
-
-
-def quiz_detail(request, id):
+def quiz_detail_sra_vra_petqa_mtacem(request, id):
   post = get_object_or_404(QuizzesPython, id=id)
   #ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
   ans = Quizzes_Users_Answers.objects.all()
@@ -80,6 +69,108 @@ def quiz_detail(request, id):
                         'check_answer':check_answer,
                         'another_quiz':another_quiz
                       })
+
+############################################################
+############################################################
+############################################################
+
+@login_required
+def quiz_detail(request, id):
+
+  #############################################
+  # That logic in below take last quiz id
+  #############################################
+  count = 0
+  another_quiz = id
+  for quiz_id in QuizzesPython.objects.all():
+    count = quiz_id.id
+  #############################################
+
+
+  #############################################
+  # That logic in below get all solved id which user answered right
+  #############################################
+  user_answer_correct_number = []
+  user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
+  for solved_id in user_correct_answer:
+    user_answer_correct_number.append(solved_id.id)
+  print(user_answer_correct_number)
+  #############################################
+
+
+  #############################################
+  # That logic in below we append exist quiz id
+  #############################################
+  number_of_quiz = randint(1,count)
+  ids_exist_list = []
+  for exist in QuizzesPython.objects.all():
+    ids_exist_list.append(exist.id)
+  #############################################
+
+
+  #############################################
+  # That logic in below remove all quiz id which user answerd right
+  #############################################
+  for rm_id in user_answer_correct_number:
+    if rm_id in ids_exist_list:
+      ids_exist_list.remove(rm_id)
+  #############################################
+
+
+  #############################################
+  # Check quiz id there is in the ids_exist_list list
+  #############################################
+  try:
+    if number_of_quiz in ids_exist_list:
+      another_quiz = number_of_quiz
+  except QuizzesPython.DoesNotExist as e:
+    return f"Error {e}"
+
+  
+  post = get_object_or_404(QuizzesPython, id=id)
+  ans = Quizzes_Users_Answers.objects.all()
+  check_answer = False
+  
+  if request.method == 'POST':
+    form = UserAnswerPythonForm(request.POST)
+    if form.is_valid():
+      ans.answer = form.cleaned_data['answer']
+      if post.admin_correct_answer == ans.answer:
+        messages.success(request, "Your answer is right")
+        #ans.save()
+        # check user answer correct or no in HTML
+        check_answer=True
+        # added user answer in DB
+        Quizzes_Users_Answers.objects.create(quiz_id_id=id, user_id_id=request.user.id, answer=ans.answer)
+      else:
+        messages.error(request, "Your answer is wrong")
+  else:
+    form = UserAnswerPythonForm()
+  return render(request,'quizzesapp/quizzes/detail.html',
+                        {'post': post, 
+                        'form':form, 
+                        'ans':ans, 
+                        'check_answer':check_answer,
+                        'another_quiz':another_quiz,
+                      })
+
+
+def quiz_list(request):
+  post_list = QuizzesPython.objects.all()
+
+  paginator = Paginator(post_list, 3) 
+  page_number = request.GET.get('page', 1) 
+  try:
+    posts = paginator.page(page_number)
+  except PageNotAnInteger:
+    # If page_number is not an integer deliver the first page 
+    posts = paginator.page(1)
+  except EmptyPage:
+    # If page_number is out of range deliver last page of results 
+    posts = paginator.page(paginator.num_pages)
+  
+  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts})
+
 
 def quiz_share(request, quiz_id):
   # Retrieve post by id
@@ -117,3 +208,4 @@ def post_search(request):
                      {'form': form,
                       'query': query,
                       'results': results})
+
