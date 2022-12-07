@@ -56,6 +56,7 @@ class QuizzesPython(models.Model):
     section = models.CharField(max_length=50, choices=SECTION_CHOOSE)
     code_image = models.ImageField(default='default.jpg', upload_to='code_photo')
     solution = models.TextField(blank=True)
+    hint = models.TextField(blank=True)
 
     def __str__(self):
         return self.section
