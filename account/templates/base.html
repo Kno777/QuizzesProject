@@ -25,6 +25,9 @@
           <li {% if section == "questionnier" %}class="selected"{% endif %}>
             <a href="#">Questionnier</a>
           </li>
+          <li {% if section == "quiz" %}class="selected"{% endif %}>
+            <a href="{% url "quizzesapp:quiz_list" %}">Quiz</a>
+          </li>
         </ul>
       {% endif %}
       <span class="user">
