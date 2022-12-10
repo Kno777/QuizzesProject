@@ -54,21 +54,12 @@ class QuizzesPython(models.Model):
     question = models.CharField(max_length=200)
     admin_correct_answer = models.CharField(max_length=50)
     section = models.CharField(max_length=50, choices=SECTION_CHOOSE)
-    code_image = models.ImageField(default='default.jpg', upload_to='code_photo')
     solution = models.TextField(blank=True)
     hint = models.TextField(blank=True)
+    code = models.TextField()
 
     def __str__(self):
         return self.section
-
-    def save(self, *args, **kwargs):
-        super(QuizzesPython, self).save(*args, **kwargs)
-        img = Image.open(self.code_image.path)
-        
-        if img.height > 300 or img.width > 300:
-            output_size = (300, 300)
-            img.thumbnail(output_size)
-            img.save(self.code_image.path)
 
     def get_absolute_url(self):
            return reverse('quizzesapp:quiz_detail', kwargs={'id':self.id})
