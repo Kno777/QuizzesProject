@@ -19,60 +19,62 @@ from django.contrib.auth.decorators import login_required
 
 # es 3 functioneri vra petqa mtacem te vonc darcnem async vor jisht ashxati
 
-def get_quiz_count():
-  count = 0
-  for quiz_id in QuizzesPython.objects.all():
-    count = quiz_id.id
-  return count
+# def get_quiz_count():
+#   count = 0
+#   for quiz_id in QuizzesPython.objects.all():
+#     count = quiz_id.id
+#   return count
 
-def get_next_quiz():
-  number_of_quiz = randint(1,get_quiz_count())
-  ids_exist_list = []
-  for exist in QuizzesPython.objects.all():
-    ids_exist_list.append(exist.id)
-  try:
-    if number_of_quiz in ids_exist_list:
-      print("Number ----->", number_of_quiz)
-      print("idx list ---->", ids_exist_list)
-      return number_of_quiz
-  except QuizzesPython.DoesNotExist as e:
-    return f"Error {e}"
+# def get_next_quiz():
+#   number_of_quiz = randint(1,get_quiz_count())
+#   ids_exist_list = []
+#   for exist in QuizzesPython.objects.all():
+#     ids_exist_list.append(exist.id)
+#   try:
+#     if number_of_quiz in ids_exist_list:
+#       print("Number ----->", number_of_quiz)
+#       print("idx list ---->", ids_exist_list)
+#       return number_of_quiz
+#   except QuizzesPython.DoesNotExist as e:
+#     return f"Error {e}"
 
 
-def quiz_detail_sra_vra_petqa_mtacem(request, id):
-  post = get_object_or_404(QuizzesPython, id=id)
-  #ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
-  ans = Quizzes_Users_Answers.objects.all()
-  check_answer = False
-  another_quiz = get_next_quiz()
-  print("Another ----->",another_quiz)
+# def quiz_detail_sra_vra_petqa_mtacem(request, id):
+#   post = get_object_or_404(QuizzesPython, id=id)
+#   #ans = get_object_or_404(Quizzes_Users_Answers, id=id)  
+#   ans = Quizzes_Users_Answers.objects.all()
+#   check_answer = False
+#   another_quiz = get_next_quiz()
+#   print("Another ----->",another_quiz)
 
-  if request.method == 'POST':
-    form = UserAnswerPythonForm(request.POST)
-    if form.is_valid():
-      ans.answer = form.cleaned_data['answer']
-      if post.admin_correct_answer == ans.answer:
-        messages.success(request, "Your answer is right")
-        #ans.save()
-        # check user answer correct or no in HTML
-        check_answer=True
-        # added user answer in DB
-        Quizzes_Users_Answers.objects.create(quiz_id_id=id, user_id_id=request.user.id, answer=ans.answer)
-      else:
-        messages.error(request, "Your answer is wrong")
-  else:
-    form = UserAnswerPythonForm()
-  return render(request,'quizzesapp/quizzes/detail.html',
-                        {'post': post, 
-                        'form':form, 
-                        'ans':ans, 
-                        'check_answer':check_answer,
-                        'another_quiz':another_quiz
-                      })
+#   if request.method == 'POST':
+#     form = UserAnswerPythonForm(request.POST)
+#     if form.is_valid():
+#       ans.answer = form.cleaned_data['answer']
+#       if post.admin_correct_answer == ans.answer:
+#         messages.success(request, "Your answer is right")
+#         #ans.save()
+#         # check user answer correct or no in HTML
+#         check_answer=True
+#         # added user answer in DB
+#         Quizzes_Users_Answers.objects.create(quiz_id_id=id, user_id_id=request.user.id, answer=ans.answer)
+#       else:
+#         messages.error(request, "Your answer is wrong")
+#   else:
+#     form = UserAnswerPythonForm()
+#   return render(request,'quizzesapp/quizzes/detail.html',
+#                         {'post': post, 
+#                         'form':form, 
+#                         'ans':ans, 
+#                         'check_answer':check_answer,
+#                         'another_quiz':another_quiz
+#                       })
 
 ############################################################
 ############################################################
 ############################################################
+
+
 
 @login_required
 def quiz_detail(request, id):
@@ -130,9 +132,15 @@ def quiz_detail(request, id):
   post = get_object_or_404(QuizzesPython, id=id)
   ans = Quizzes_Users_Answers.objects.all()
   check_answer = False
-  
+
+  show_me_hint = request.GET.get('hint')
+  hint_check = False
+  if show_me_hint == "true":
+    hint_check = True
+
   if request.method == 'POST':
     form = UserAnswerPythonForm(request.POST)
+    
     if form.is_valid():
       ans.answer = form.cleaned_data['answer']
       if post.admin_correct_answer == ans.answer:
@@ -152,11 +160,21 @@ def quiz_detail(request, id):
                         'ans':ans, 
                         'check_answer':check_answer,
                         'another_quiz':another_quiz,
+                        'hint_check':hint_check
                       })
+
+@login_required
+def code(request):
+  return render(request, 'quizzesapp/quizzes/code.html', {'section': 'code'})
 
 
 def quiz_list(request):
-  post_list = QuizzesPython.objects.all()
+  user_answer_correct_number = []
+  user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
+  for solved_id in user_correct_answer:
+    user_answer_correct_number.append(solved_id.id)
+
+  post_list = QuizzesPython.objects.all().filter(id__in=user_answer_correct_number)
 
   paginator = Paginator(post_list, 3) 
   page_number = request.GET.get('page', 1) 
