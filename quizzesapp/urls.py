@@ -9,4 +9,5 @@ urlpatterns = [
     path('quiz/question/<int:id>/', views.quiz_detail, name='quiz_detail'),
     path('quiz/question/<int:quiz_id>/share/', views.quiz_share, name='quiz_share'),
     path('quiz/search/', views.post_search, name='post_search'),
+    path('quiz/code/', views.code, name='code'),
 ]
