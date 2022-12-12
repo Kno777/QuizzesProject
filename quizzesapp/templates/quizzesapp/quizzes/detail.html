@@ -35,7 +35,11 @@
   <div>
     {%if check_answer %}
       <h1>{{post.solution}}</h1>
+      <li>
+        <a href="{% url "quizzesapp:code" %}">Code Check</a>
+      </li>
     {%endif%}
+
   </div>
   <p>
     <li>
@@ -59,9 +63,6 @@
   </div>
   <br>
   <div>
-    <li>
-      <a href="{% url "quizzesapp:code" %}">Code Check</a>
-    </li>
     <ul>
       <li><a href="{% url 'quizzesapp:quiz_detail' id=another_quiz %}">Another Quiz</a></li>
     </ul>
