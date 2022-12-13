@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('quizzesapp.urls', namespace='quizzesapp')),
     path('', include('exerciseapp.urls', namespace='exerciseapp')),
-    path('account/', include('account.urls')),
+    path('', include('account.urls')),
 ]
 
 if settings.DEBUG:
