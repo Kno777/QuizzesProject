@@ -167,7 +167,7 @@ def quiz_detail(request, id):
 def code(request):
   return render(request, 'quizzesapp/quizzes/code.html', {'section': 'code'})
 
-
+@login_required
 def quiz_list(request):
   user_answer_correct_number = []
   user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
