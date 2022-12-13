@@ -1,0 +1,23 @@
+{% extends "exerciseapp/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block content %}
+{% load static %}
+  <h1>{{ post.title }}</h1>
+  <pre>
+    <h3>{{ post.description }}</h3>
+  </pre>
+{% if solved %}
+  <pre>
+    <h2>Your answer is right!</h2>
+    <h3>{{post.admin_correct_answer}}</h3>
+  </pre>
+{%else%}
+<form method="post" enctype="multipart/form-data">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="answer">
+</form>
+{%endif%}
+{% endblock %}
+
+
