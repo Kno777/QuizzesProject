@@ -1,5 +1,6 @@
 @import url(//fonts.googleapis.com/css?family=Muli);
 
+
 body {
     margin:0;
     padding:0;
@@ -11,7 +12,7 @@ p {
 }
 
 a {
-    color:#12c064;
+    color:#00ff77;
     text-decoration:none;
 }
 
@@ -47,7 +48,7 @@ ol {
 #header .logo {
     font-family: 'Muli', sans-serif;
     float:left;
-    color:#f3f7cc;
+    color:#878787;
     font-size:20px;
     margin-right:10%;
 }
