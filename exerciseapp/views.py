@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Exercises, Exercises_Users_Answers
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
-from .forms import ExercisesUserAnswerForm
+from .forms import ExercisesUserAnswerForm, SearchForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -22,7 +22,20 @@ def exercises_list(request):
     # If page_number is out of range deliver last page of results 
     posts = paginator.page(paginator.num_pages)
   
-  return render(request,'exerciseapp/exercises/list.html', {'posts': posts})
+  form = SearchForm()
+  query = None
+  results = []
+  if 'query' in request.GET:
+    form = SearchForm(request.GET)
+    if form.is_valid():
+      query = form.cleaned_data['query']
+      results = Exercises.objects.filter(title__icontains=query)
+  
+  return render(request,'exerciseapp/exercises/list.html', 
+                      {'posts': posts,
+                      'form': form,
+                      'query': query,
+                      'results': results})
 
 @login_required
 def exercise_detail(request, id):
@@ -34,7 +47,7 @@ def exercise_detail(request, id):
       solved = obj.is_solved
   except Exercises_Users_Answers.DoesNotExist as e:
       print(e)
-        
+  
   if request.method == 'POST':
       form = ExercisesUserAnswerForm(request.POST)
       if form.is_valid():
