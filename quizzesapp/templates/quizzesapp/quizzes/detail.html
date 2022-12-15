@@ -3,7 +3,13 @@
 {% block content %}
 {% load static %}
   <h1>{{ post.question }}</h1>
-  <h1>{{ post.section }}</h1>
+  {%if "Easy" in post.section %}
+  <h2>{{ post.section }}🟡⚪️⚪️</h2>
+  {%elif "Medium" in post.section %}
+  <h2>{{ post.section }}🟡🟡⚪️</h2>
+  {%else%}
+  <h2>{{ post.section }}🟡🟡🟡</h2>
+  {%endif%}
   <style>
     .code-style {
       font-size: 18px;
