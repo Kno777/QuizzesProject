@@ -26,29 +26,29 @@ def exercises_list(request):
 
 @login_required
 def exercise_detail(request, id):
-    post = get_object_or_404(Exercises, id=id)
-    ans = Exercises_Users_Answers.objects.all()
-    try:
-        solved = False    
-        obj = Exercises_Users_Answers.objects.get(user_id_id=request.user.id)
-        solved = obj.is_solved
-    except Exercises_Users_Answers.DoesNotExist as e:
-        print(e)
+  post = get_object_or_404(Exercises, id=id)
+  ans = Exercises_Users_Answers.objects.all()
+  try:
+      solved = False    
+      obj = Exercises_Users_Answers.objects.filter(exercise_id_id=id).get(user_id_id=request.user.id)
+      solved = obj.is_solved
+  except Exercises_Users_Answers.DoesNotExist as e:
+      print(e)
         
-    if request.method == 'POST':
-        form = ExercisesUserAnswerForm(request.POST)
-        if form.is_valid():
-            ans.answer = form.cleaned_data['answer']
-            if post.admin_correct_answer == ans.answer:
-                messages.success(request, "Your answer is right")
-                # added user answer in DB
-                solved = True
-                Exercises_Users_Answers.objects.create(exercise_id_id=id, user_id_id=request.user.id, answer=ans.answer, is_solved=True)
-            else:
-                messages.error(request, "Your answer is wrong")
-    else:
-        form = ExercisesUserAnswerForm()
-    return render(request,'exerciseapp/exercises/detail.html',
+  if request.method == 'POST':
+      form = ExercisesUserAnswerForm(request.POST)
+      if form.is_valid():
+          ans.answer = form.cleaned_data['answer']
+          if post.admin_correct_answer == ans.answer:
+              messages.success(request, "Your answer is right")
+              # added user answer in DB
+              solved = True
+              Exercises_Users_Answers.objects.create(exercise_id_id=id, user_id_id=request.user.id, answer=ans.answer, is_solved=True)
+          else:
+              messages.error(request, "Your answer is wrong")
+  else:
+      form = ExercisesUserAnswerForm()
+  return render(request,'exerciseapp/exercises/detail.html',
                         {'post': post, 
                         'form':form, 
                         'ans':ans, 
