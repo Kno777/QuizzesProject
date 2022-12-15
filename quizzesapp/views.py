@@ -132,7 +132,7 @@ def quiz_detail(request, id):
   post = get_object_or_404(QuizzesPython, id=id)
   ans = Quizzes_Users_Answers.objects.all()
   check_answer = False
-
+  
   show_me_hint = request.GET.get('hint')
   hint_check = False
   if show_me_hint == "true":
