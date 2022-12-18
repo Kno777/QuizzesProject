@@ -1,30 +1,36 @@
 @import url(//fonts.googleapis.com/css?family=Muli);
 
+@font-face {
+    font-family: "Roboto";
+    src: url("/quizzesapp/templates/quizzesapp/quizzes/fonts/Roboto/Roboto-Regular.ttf"),
+      
+  }
+
+
 body {
     margin:0;
     padding:0;
-    font-family:helvetica, sans-serif;
+    font-family: "Roboto", helvetica, sans-serif;
 }
 
 p {
     line-height: 1.8;
+    color: #282A35'
 }
 
 a {
-    color:#00ff77;
-    text-decoration:none;
+   color: #282A35
 }
 
 a:hover {
-    color:#00ff77;
+    text-decoration: none;
 }
 
-h1, h2, h3, h4, h5 , h6 { font-family: 'Muli', sans-serif; font-weight:normal; }
+h1, h2, h3, h4, h5 , h6 { color: #282A35; font-family: 'Roboto', sans-serif; font-weight:normal; }
 
 h1 {
-    border-bottom:1px solid #bbb;
-    padding:0 0 10px 0;
-    margin:10px 0 20px 0;
+    padding:0 0 0px 0;
+    margin:10px 0 10px 0;
 }
 
 h2 {
@@ -36,11 +42,12 @@ ol {
 }
 
 #header {
-    padding:10px 100px;
+    /* padding:10px 100px; */
+    width: 100%;
+    overflow: hidden;
     font-size:14px;
-    background:#12c064;
-    color:#fff;
-    border-bottom:4px solid #1cdf78;
+    background:#282A35; 
+    color:white;
     overflow:auto;
 }
 
@@ -64,24 +71,48 @@ ol {
 }
 
 #header ul.menu li.selected a, #header ul.menu li.selected a:hover {
-    color:#12c064;
-    font-weight:bold;
+    background-color: rgb(4, 170, 109);
+    color: white;
+    font-weight: bold;
 }
 
 #header a {
-    color:#f3f7cc;
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px 9px 15px !important;
+    font-size: 17px;
+    font-family: 'Roboto', sans-serif;
+    padding: 5px 5px;
+    text-align: center;
+    display: inline-block;
 }
+
+/* #header a:link {
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+
+} */
+  
 #header a:hover {
-    color:#fff;
+    color: white;
+    background-color: #16171d;
 }
 
 #header .user {
     float:right;
     padding-top:4px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 17px;
 }
 
 #content {
-    padding:30px 100px;
+    padding:0px;
+    border: 0px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 55em;
 }
 
 /* forms */
@@ -132,7 +163,7 @@ input[type=submit], a.button {
 }
 /* messages */
 ul.messages {
-    margin:10px 100px;
+    margin:0;
     padding:0;
     list-style-type:
     none;
@@ -162,7 +193,7 @@ ul.messages li.warning a { color:#f49000; }
 ul.messages li a.close {
     margin:0;
     float:right;
-    opacity:1;
+    opacity:10;
     border:0;
     box-shadow:none;
     text-shadow:none;
@@ -275,3 +306,87 @@ img.user-detail {
     font-style:italic;
     color:#ccc;
 }
+
+.flex-container {
+    display:flex;
+}
+
+.flex-container > div {
+    margin: 10px 10px 10px 0;
+
+}
+
+.generalButton {
+    font-size: 17px;
+    background-color: white;
+    color: black;
+    border: 2px solid #16171d;
+    border-radius: 20px;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.generalButton:hover {
+    background-color: #16171d;
+    color: white;
+}
+
+ div > button > a {
+    text-decoration: none;
+    color: black;
+}
+
+
+.code-style {
+    font-size: 18px;
+    line-height: 24px;
+    background-color: rgb(255, 255, 255);
+    color: #000000;
+  }
+
+.hint{
+    background-color: #ffa;
+}
+
+/* .hintButton:hover{
+    background-color: rgb(4, 170, 109);
+} */
+
+
+.hint > h1 {
+    font-weight: bold;
+    padding: 10px 10px 0 20px;
+}
+
+.hint > p {
+    padding: 0 10px 10px 20px;
+}
+
+.solutionCheck {
+    background-color: #81ce81;
+}
+
+.solutionCheck > h1 {
+    font-weight: bold;
+    padding: 10px 10px 0 20px;
+}
+
+.solutionCheck > li {
+    padding: 0 10px 10px 20px;
+    list-style: none;
+    
+}
+
+.solutionCheck > p {
+    padding: 0 10px 10px 20px;
+
+}
+
+.solutionCheck > li > a {
+    text-decoration: none;
+    float: right;
+    margin: -20px 0;
+}
+
