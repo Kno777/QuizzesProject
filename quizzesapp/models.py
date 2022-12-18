@@ -8,45 +8,45 @@ class QuizzesPython(models.Model):
     """This is Quizzes class for only Python programming language!"""
     SECTION_CHOOSE = (
         ("List", (
-                ("List Easy", "List Easy🟡⚪️⚪️"),
-                ("List Medium", "List Medium🟡🟡⚪️"),
-                ("List Difficult", "List Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "List Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "List Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "List Difficult🟡🟡🟡"),
             )
         ),
         ("Tuple", (
-                ("Tuple Easy", "Tuple Easy🟡⚪️⚪️"),
-                ("Tuple Medium", "Tuple Medium🟡🟡⚪️"),
-                ("Tuple Difficult", "Tuple Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "Tuple Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "Tuple Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "Tuple Difficult🟡🟡🟡"),
             )
         ),
         ("Set", (
-                ("Set Easy", "Set Easy🟡⚪️⚪️"),
-                ("Set Medium", "Set Medium🟡🟡⚪️"),
-                ("Set Difficult", "Set Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "Set Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "Set Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "Set Difficult🟡🟡🟡"),
             )
         ),
         ("String", (
-                ("String Easy", "String Easy🟡⚪️⚪️"),
-                ("String Medium", "String Medium🟡🟡⚪️"),
-                ("String Difficult", "String Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "String Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "String Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "String Difficult🟡🟡🟡"),
             )
         ),
         ("Dictionary", (
-                ("Dict Easy", "Dict Easy🟡⚪️⚪️"),
-                ("Dict Medium", "Dict Medium🟡🟡⚪️"),
-                ("Dict Difficult", "Dict Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "Dict Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "Dict Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "Dict Difficult🟡🟡🟡"),
             )
         ),
         ("OOP", (
-                ("OOP Easy", "OOP Easy🟡⚪️⚪️"),
-                ("OOP Medium", "OOP Medium🟡🟡⚪️"),
-                ("OOP Difficult", "OOP Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "OOP Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "OOP Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "OOP Difficult🟡🟡🟡"),
             )
         ),
         ("Any Else Thing", (
-                ("Any Easy", "Any Easy🟡⚪️⚪️"),
-                ("Any Medium", "Any Medium🟡🟡⚪️"),
-                ("Any Difficult", "Any Difficult🟡🟡🟡"),
+                ("Difficulty: Easy", "Any Easy🟡⚪️⚪️"),
+                ("Difficulty: Medium", "Any Medium🟡🟡⚪️"),
+                ("Difficulty: Hard", "Any Difficult🟡🟡🟡"),
             )
         ),
     )
