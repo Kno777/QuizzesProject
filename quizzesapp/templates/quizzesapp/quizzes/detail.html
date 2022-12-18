@@ -1,23 +1,24 @@
 {% extends "quizzesapp/base.html" %}
-{% block title %}{{ post.question }}{% endblock %}
+{% block title %} {{ post.question }}
+{% endblock %}
 {% block content %}
 {% load static %}
+
+<div class="questionTitle">
   <h1>{{ post.question }}</h1>
+</div>
+
+<div class="questionLevel">
   {%if "Easy" in post.section %}
-  <h2>{{ post.section }}🟡⚪️⚪️</h2>
+  <h2>{{ post.section }} 🟢⚪️⚪️</h2>
   {%elif "Medium" in post.section %}
-  <h2>{{ post.section }}🟡🟡⚪️</h2>
+  <h2>{{ post.section }} 🟡🟡⚪️</h2>
   {%else%}
-  <h2>{{ post.section }}🟡🟡🟡</h2>
+  <h2>{{ post.section }} 🔴🔴🔴</h2>
   {%endif%}
-  <style>
-    .code-style {
-      font-size: 18px;
-      line-height: 24px;
-      background-color: rgb(255, 255, 255);
-      color: #000000;
-    }
-  </style>
+</div>
+
+<div class="questionCode">
   <pre>
     <!--code Tag starts here -->
     <code class="code-style">
@@ -25,54 +26,49 @@
     <!--code Tag starts here -->
     </code>
   </pre>
+
+</div>
+
+<div class="AnswerSection">
   <form method="post" enctype="multipart/form-data">
     {{ form.as_p }}
     {% csrf_token %}
     <input type="submit" value="answer">
   </form>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <div>
-    {%if check_answer %}
-      <h1>{{post.solution}}</h1>
-      <li>
-        <a href="{% url "quizzesapp:code" %}">Code Check</a>
-      </li>
-    {%endif%}
+</div>
 
-  </div>
-  <p>
-    <li>
-      <a href="{% url "quizzesapp:quiz_share" post.id %}">
-        Share this post
-      </a>
-    </li>
-  </p>
-  <br>
+<div class="solutionCheck">
+  {%if check_answer %}
+  <h1>Solution:</h1>
+  <p>{{post.solution}}</p>
+  <li>
+    <a href="{% url "quizzesapp:code" %}">Code Check</a>
+  </li>
+  {%endif%}
+</div>
+
+<div class="hint">
+  {%if hint_check %}
+  <h1>Hint:</h1>
+  <p>{{post.hint}}</p>
+  {%endif%}
+</div>
+
+<div class="flex-container">
   <div>
     <form method="get">
-      <li>
-        <button name="hint" value="true">Hint
-      </li>
-    </form>
+      <button name="hint" value="true" class="hintButton generalButton">Hint</button>
   </div>
   <div>
-    {%if hint_check %}
-      <h1>{{post.hint}}</h1>
-    {%endif%}
+      <a href="{% url 'quizzesapp:quiz_detail' id=another_quiz %}" class="generalButton">Another Quiz</a>
   </div>
-  <br>
-  <div>
-    <ul>
-      <li><a href="{% url 'quizzesapp:quiz_detail' id=another_quiz %}">Another Quiz</a></li>
-    </ul>
-  </div>
+</div>
+
+<div class="shareButton">
+  <a href="{% url "quizzesapp:quiz_share" post.id %}">
+    Share this post
+  </a>
+</div>
+
+
 {% endblock %}
-
-
