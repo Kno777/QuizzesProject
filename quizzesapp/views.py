@@ -160,7 +160,8 @@ def quiz_detail(request, id):
                         'ans':ans, 
                         'check_answer':check_answer,
                         'another_quiz':another_quiz,
-                        'hint_check':hint_check
+                        'hint_check':hint_check,
+                        'section':'quiz'
                       })
 
 @login_required
@@ -187,7 +188,7 @@ def quiz_list(request):
     # If page_number is out of range deliver last page of results 
     posts = paginator.page(paginator.num_pages)
   
-  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts})
+  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts, 'section':'quiz'})
 
 
 def quiz_share(request, quiz_id):
