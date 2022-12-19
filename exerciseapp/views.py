@@ -35,7 +35,8 @@ def exercises_list(request):
                       {'posts': posts,
                       'form': form,
                       'query': query,
-                      'results': results})
+                      'results': results,
+                      'section':'exercises'})
 
 @login_required
 def exercise_detail(request, id):
@@ -65,5 +66,6 @@ def exercise_detail(request, id):
                         {'post': post, 
                         'form':form, 
                         'ans':ans, 
-                        'solved':solved
+                        'solved':solved,
+                        'section':'exercises'
                       })
