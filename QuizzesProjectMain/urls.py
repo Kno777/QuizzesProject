@@ -23,6 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('quizzesapp.urls', namespace='quizzesapp')),
     path('', include('exerciseapp.urls', namespace='exerciseapp')),
+    path('', include('ownapp.urls', namespace='ownapp')),
     path('', include('account.urls')),
 ]
 
