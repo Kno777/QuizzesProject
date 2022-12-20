@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, get_object_or_404
+from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
 from .models import QuizzesPython, Quizzes_Users_Answers
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -12,6 +12,7 @@ from django.contrib import messages
 
 from random import randint
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 
 ############################################################
 ############################################################
@@ -168,8 +169,58 @@ def quiz_detail(request, id):
 def code(request):
   return render(request, 'quizzesapp/quizzes/code.html', {'section': 'code'})
 
+
 @login_required
 def quiz_list(request):
+  #############################################
+  # That logic in below take last quiz id
+  #############################################
+  count = 0
+  another_quiz = 1
+  for quiz_id in QuizzesPython.objects.all():
+    count = quiz_id.id
+  #############################################
+
+
+  #############################################
+  # That logic in below get all solved id which user answered right
+  #############################################
+  user_answer_correct_number = []
+  user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
+  for solved_id in user_correct_answer:
+    user_answer_correct_number.append(solved_id.id)
+  print(user_answer_correct_number)
+  #############################################
+
+
+  #############################################
+  # That logic in below we append exist quiz id
+  #############################################
+  number_of_quiz = randint(1,count)
+  ids_exist_list = []
+  for exist in QuizzesPython.objects.all():
+    ids_exist_list.append(exist.id)
+  #############################################
+
+
+  #############################################
+  # That logic in below remove all quiz id which user answerd right
+  #############################################
+  for rm_id in user_answer_correct_number:
+    if rm_id in ids_exist_list:
+      ids_exist_list.remove(rm_id)
+  #############################################
+
+
+  #############################################
+  # Check quiz id there is in the ids_exist_list list
+  #############################################
+  try:
+    if number_of_quiz in ids_exist_list:
+      another_quiz = number_of_quiz
+  except QuizzesPython.DoesNotExist as e:
+    return f"Error {e}"
+
   user_answer_correct_number = []
   user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
   for solved_id in user_correct_answer:
@@ -188,7 +239,7 @@ def quiz_list(request):
     # If page_number is out of range deliver last page of results 
     posts = paginator.page(paginator.num_pages)
   
-  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts, 'section':'quiz'})
+  return render(request,'quizzesapp/quizzes/list.html', {'posts': posts, 'section':'quiz', 'another_quiz':another_quiz})
 
 
 def quiz_share(request, quiz_id):
@@ -228,3 +279,19 @@ def post_search(request):
                       'query': query,
                       'results': results})
 
+
+# I must check it if works or not
+# class DashboardView(TemplateView):
+#   template_name = 'accounts/dashboard.html'
+
+#   def get_dept(self):
+#     return 2
+
+#   def get_profile(self):
+#     return 1
+
+#   def get_context_data(self, *args, **kwargs):
+#     context = super(QuizzesPython, self).get_context_data(*args, **kwargs)
+#     context['chart'] = self.get_profile()
+#     context['chart2'] = self.get_dept()
+#     return context
