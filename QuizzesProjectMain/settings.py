@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # My Own Apps
     'quizzesapp.apps.QuizzesappConfig',
     'exerciseapp.apps.ExerciseappConfig',
+    'ownapp.apps.OwnappConfig',
 
     'django_filters',
 ]
