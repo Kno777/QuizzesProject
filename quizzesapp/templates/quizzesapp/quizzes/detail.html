@@ -44,6 +44,11 @@
   <li>
     <a href="{% url "quizzesapp:code" %}">Code Check</a>
   </li>
+  <div class="nextQuiz">
+    <li>
+      <a href="{% url 'quizzesapp:quiz_detail' id=another_quiz %}">Next Quiz</a>
+    </li>
+  </div>
   {%endif%}
 </div>
 

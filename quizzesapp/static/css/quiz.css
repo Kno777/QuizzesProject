@@ -395,3 +395,7 @@ img.user-detail {
     margin: -20px 0;
 }
 
+.nextQuiz > li > a {
+    text-decoration: none;
+}
+
