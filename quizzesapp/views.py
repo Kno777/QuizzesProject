@@ -10,7 +10,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.postgres.search import SearchVector
 from django.contrib import messages
 
-from random import randint
+from random import randint, choice
 from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
 
@@ -96,7 +96,7 @@ def quiz_detail(request, id):
   user_answer_correct_number = []
   user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
   for solved_id in user_correct_answer:
-    user_answer_correct_number.append(solved_id.id)
+    user_answer_correct_number.append(solved_id.quiz_id_id)
   print(user_answer_correct_number)
   #############################################
 
@@ -104,7 +104,7 @@ def quiz_detail(request, id):
   #############################################
   # That logic in below we append exist quiz id
   #############################################
-  number_of_quiz = randint(1,count)
+  #number_of_quiz = randint(1,count)
   ids_exist_list = []
   for exist in QuizzesPython.objects.all():
     ids_exist_list.append(exist.id)
@@ -118,6 +118,11 @@ def quiz_detail(request, id):
     if rm_id in ids_exist_list:
       ids_exist_list.remove(rm_id)
   #############################################
+
+  try:
+    number_of_quiz = choice(ids_exist_list)
+  except:
+    return f"Quiz finished"
 
 
   #############################################
@@ -188,7 +193,7 @@ def quiz_list(request):
   user_answer_correct_number = []
   user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
   for solved_id in user_correct_answer:
-    user_answer_correct_number.append(solved_id.id)
+    user_answer_correct_number.append(solved_id.quiz_id_id)
   print(user_answer_correct_number)
   #############################################
 
@@ -196,7 +201,6 @@ def quiz_list(request):
   #############################################
   # That logic in below we append exist quiz id
   #############################################
-  number_of_quiz = randint(1,count)
   ids_exist_list = []
   for exist in QuizzesPython.objects.all():
     ids_exist_list.append(exist.id)
@@ -210,6 +214,11 @@ def quiz_list(request):
     if rm_id in ids_exist_list:
       ids_exist_list.remove(rm_id)
   #############################################
+
+  try:
+    number_of_quiz = choice(ids_exist_list)
+  except:
+    return f"Quiz finished"
 
 
   #############################################
