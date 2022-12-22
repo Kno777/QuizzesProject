@@ -16,7 +16,7 @@
            <li {% if section == "exercises" %}class="selected"{% endif %}>
              <a href="{% url "exerciseapp:exercises_list" %}">Exercises</a>
            </li>
-           <li {% if section == "own_question" %}class="selected"{% endif %}>
+           <li {% if section == "own" %}class="selected"{% endif %}>
             <a href="{% url "ownapp:own_list" %}">Create Own Offer</a>
           </li> 
           <li {% if section == "book" %}class="selected"{% endif %}>
