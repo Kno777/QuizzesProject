@@ -221,12 +221,12 @@ def quiz_list(request):
   except QuizzesPython.DoesNotExist as e:
     return f"Error {e}"
 
-  user_answer_correct_number = []
+  user_answer_correct_num = []
   user_correct_answer = Quizzes_Users_Answers.objects.all().filter(user_id_id=request.user.id)
   for solved_id in user_correct_answer:
-    user_answer_correct_number.append(solved_id.id)
-
-  post_list = QuizzesPython.objects.all().filter(id__in=user_answer_correct_number)
+    user_answer_correct_num.append(solved_id.quiz_id_id)
+  
+  post_list = QuizzesPython.objects.all().filter(id__in=user_answer_correct_num)
 
   paginator = Paginator(post_list, 3) 
   page_number = request.GET.get('page', 1) 

@@ -1,1 +1,32 @@
-<h1>Hello Man</h1>
+{% extends "ownapp/base.html" %}
+
+{% block title %}Own Offer{% endblock %}
+
+{% block content %}
+<div class="ownQuiz">
+    <h1>Create your own quiz
+    </h1>
+    <h1>Please Remember:
+        <h3>
+            <li>
+                Your quiz should be short.
+            </li>
+            <li>
+                Your quiz should compile.
+            </li>
+        </h3>
+    </h1>
+    <a href="{% url 'ownapp:own_quiz' %}">Create Your Quiz</a>
+</div>
+
+<div class="ownExercises">
+    <h1>Create your own exercise
+    </h1>
+    <a href="{% url 'ownapp:own_exercise'%}">Create Your Exercise</a>
+</div>
+{% endblock %}
+
+
+  
+
+
