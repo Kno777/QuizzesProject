@@ -1,0 +1,26 @@
+{% extends "ownapp/base.html" %}
+
+{% block title %}Own Quiz{% endblock %}
+
+{% block content %}
+<div class="sentMessageQuiz">
+  {%  if sent %}
+    <h1>Your quiz has successfully sent.</h1>
+    <p>You will get e-mail when the quiz has published</p>
+    <h3>Thanks for to participate.</h3>
+  {%else%}
+</div>
+<div class="OwnQuizCreate">
+    <form method="post" enctype="multipart/form-data">
+      {{ form.as_p }}
+      {% csrf_token %}
+      <input type="submit" value="Send Quiz">
+    </form>
+</div>
+  {% endif%}
+{% endblock %}
+
+
+  
+
+
