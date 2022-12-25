@@ -1,0 +1,27 @@
+{% extends "bookapp/base.html" %}
+{% load static %}
+
+{% block title %}
+  {{ book.name }}
+{% endblock %}
+{% block content %}
+  <div class="book-detail">
+    <img src="{% if book.book_image %}{{ book.book_image.url }}{% else %}
+    {% static "img/no_image.png" %}{% endif %}">
+    <h2>
+        <a href="{{ book.category.get_absolute_url }}">
+          {{ book.category }}
+        </a>
+    </h2>
+    <h2>{{ book.title}}</h2>
+    <h3>By {{ book.author}}</h3>
+    <p>
+        {{ book.decription|linebreaks }}
+    </p>
+    <h4>{{ book.publish}}</h4>
+  </div>
+  <div class="download-book">
+    <h5>You can download this book free))</h5>
+    <a download href="{{book.download.url}}" class="btn btnPrimary">Download Book</a>
+  </div>
+{% endblock %}
