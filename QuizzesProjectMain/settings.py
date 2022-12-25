@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'quizzesapp.apps.QuizzesappConfig',
     'exerciseapp.apps.ExerciseappConfig',
     'ownapp.apps.OwnappConfig',
+    'bookapp.apps.BookappConfig',
 
     'django_filters',
 ]

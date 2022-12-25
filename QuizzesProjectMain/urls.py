@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('quizzesapp.urls', namespace='quizzesapp')),
     path('', include('exerciseapp.urls', namespace='exerciseapp')),
     path('', include('ownapp.urls', namespace='ownapp')),
+    path('', include('bookapp.urls', namespace='bookapp')),
     path('', include('account.urls')),
 ]
 

@@ -20,7 +20,7 @@
             <a href="{% url "ownapp:own_list" %}">Create Own Offer</a>
           </li> 
           <li {% if section == "book" %}class="selected"{% endif %}>
-            <a href="#">Books</a>
+            <a href="{% url "bookapp:book_list"%}">Books</a>
           </li>
           <li {% if section == "questionnier" %}class="selected"{% endif %}>
             <a href="#">Questionnier</a>
